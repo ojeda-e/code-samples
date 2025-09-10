@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 METRICS = [
     ("Accuracy", "accuracy"),
-    ("AUROC", "auroc"),
+    ("ROC-AUC", "roc_auc"),
     ("PR-AUC", "pr_auc"),
     ("Precision", "precision"),
     ("Recall", "recall"),
@@ -27,7 +27,7 @@ METRICS = [
 
 KEY_MAP = {
     "Accuracy": "accuracy",
-    "AUROC": "auroc",
+    "ROC-AUC": "roc_auc",
     "PR-AUC": "pr_auc",
     "Precision": "precision",
     "Recall": "recall",
@@ -66,7 +66,7 @@ def evaluate_model_performance(y_true, y_pred, y_pred_proba, model_name: str):
     precision = precision_metric(y_pred_tensor, y_true_tensor).item()
     recall = recall_metric(y_pred_tensor, y_true_tensor).item()
     f1 = f1_metric(y_pred_tensor, y_true_tensor).item()
-    auroc = auroc_metric(y_pred_proba_tensor, y_true_tensor).item()
+    roc_auc = auroc_metric(y_pred_proba_tensor, y_true_tensor).item()
     pr_auc = pr_auc_metric(y_pred_proba_tensor, y_true_tensor).item()
     cm = cm_metric(y_pred_tensor, y_true_tensor)
     
@@ -89,7 +89,7 @@ def evaluate_model_performance(y_true, y_pred, y_pred_proba, model_name: str):
 
     return {
         'accuracy': accuracy,
-        'auroc': auroc,
+        'roc_auc': roc_auc,
         'pr_auc': pr_auc,
         'precision': precision,
         'recall': recall,

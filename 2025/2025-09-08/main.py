@@ -13,6 +13,7 @@ import random
 from generate_data import generate_imbalanced_data
 from build_model import train_model
 from metrics import evaluate_model_performance, compare_models
+from visualization import create_all_visualizations
 
 # Setup logging
 logging.basicConfig(level=logging.INFO, format='%(message)s')
@@ -83,6 +84,18 @@ def main():
         nn_metrics = evaluate_model_performance(nn_y_true, nn_y_pred, nn_y_proba, "Neural Network")
     
     compare_models(rf_metrics, nn_metrics)
+    
+    # Generate plots
+    logger.info("\n" + "="*60)
+    logger.info("Step 5: Creating visualizations")
+    logger.info("="*60)
+    
+    create_all_visualizations(
+        df_data, rf_metrics, nn_metrics,
+        rf_y_true, rf_y_pred, rf_y_proba,
+        nn_y_true, nn_y_pred, nn_y_proba,
+        save_dir="/tmp/plots"
+    )
 
 if __name__ == "__main__":
     main()
